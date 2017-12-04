@@ -1,5 +1,5 @@
 # A_module15
-# Drew Robinson, Korik Vargas, and Connor Breton
+# Drew Robison, Korik Vargas, and Connor Breton
 # Last modified: December 4, 2017
 
 
