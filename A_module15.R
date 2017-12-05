@@ -11,7 +11,9 @@
 
 
 setwd("C:/Users/Connor/Documents/word_files/graduate_courses/r/module_15")
+#setwd("C:\\Users\\Drew\\Documents\\UNH\\Courses\\NR 995 - R\\Modules\\15")
 
+# Read in data and do exmaine data basics
 Pheno = read.table("Bayes_pheno.csv", sep=",", header = T)
 head(Pheno)
 summary(Pheno) # no missing data
@@ -27,7 +29,7 @@ plot(Pheno$Feb_snow, Pheno$Feb_temp) # No obvious correlation
 hist(Pheno$Feb_temp) 
 hist(Pheno$Feb_snow) 
 hist(Pheno$leaf_DOY) 
-# All histograms pproximately normally distributed
+# All histograms are approximately normally distributed
 
 cor.test(Pheno$Feb_temp, Pheno$leaf_DOY) # Significant negative correlation
 cor.test(Pheno$Feb_snow, Pheno$leaf_DOY) # No statistically significant correlation
@@ -145,7 +147,7 @@ update(model.2, 50000)
 
 
 # Sample the posterior with 600000 iterations
-samp.2 <- coda.samples(model.2, variable.names = c("beta"), n.iter = 600000, thin = 60) 
+samp.2 <- coda.samples(model.2, variable.names = c("beta"), n.iter = 100000, thin = 60) 
 
 
 # Plot summary parameters
@@ -175,7 +177,7 @@ update(model.2.v2, 50000)
 
 
 # Take DIC samples instead of coda samples
-dic.2 <- dic.samples(model.2.v2, n.iter = 600000, thin = 60, type = "pD")
+dic.2 <- dic.samples(model.2.v2, n.iter = 100000, thin = 60, type = "pD")
 
 
 # Return DIC value
@@ -211,11 +213,11 @@ model.3 <- jags.model(textConnection(model_string.3), data = list.3, n.chains = 
 
 
 # Update model with burn-in iterations (40000)
-update(model.3, 40000)
+update(model.3, 50000)
 
 
 # Sample the posterior with 500000 iterations
-samp.3 <- coda.samples(model.3, variable.names = c("beta"), n.iter = 500000, thin = 50) 
+samp.3 <- coda.samples(model.3, variable.names = c("beta"), n.iter = 100000, thin = 50) 
 
 
 # Plot summary parameters
@@ -241,17 +243,17 @@ model.3.v2 <- jags.model(textConnection(model_string.3),
 
 
 # Burn-in iterations
-update(model.3.v2, 40000)
+update(model.3.v2, 50000)
 
 
 # Take DIC samples instead of coda samples
-dic.3 <- dic.samples(model.3.v2, n.iter = 500000, thin = 50, type = "pD")
+dic.3 <- dic.samples(model.3.v2, n.iter = 100000, thin = 50, type = "pD")
 
 
 # Return DIC value
 dic.3
 
-
+################################### Model Comparison ###################################
 # Compare models via DIC
 dic.1-dic.2 # Value is negative, DIC.1 is smaller than DIC.2
 dic.1-dic.3 # Value is negative, DIC.1 is smaller than DIC.3
