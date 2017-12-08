@@ -1,9 +1,9 @@
 # A_module15
 # Drew Robison, Korik Vargas, and Connor Breton
-# Last modified: December 4, 2017
+# Last modified: December 7, 2017
 
 
-# We'll continue to work with the data from last week.  The dataset includes mean February temperature (in ???C, Feb_temp), 
+# We'll continue to work with the data from last week.  The dataset includes mean February temperature (in deg. C, Feb_temp), 
 # mean snowfall (in cm, Feb_snow) and the day of year that plants leaf out (in days, leaf_DOY) around Durham, NH.  
 # The goal of this analysis is to determine whether high February temperature and/or low February snowfall accelerate leaf 
 # out, and to find the best fit model for our data given this set of predictors.  Remember that leaf out is a day of year, 
@@ -11,7 +11,6 @@
 
 
 setwd("C:/Users/Connor/Documents/word_files/graduate_courses/r/module_15")
-#setwd("C:\\Users\\Drew\\Documents\\UNH\\Courses\\NR 995 - R\\Modules\\15")
 
 # Read in data and do exmaine data basics
 Pheno = read.table("Bayes_pheno.csv", sep=",", header = T)
@@ -146,7 +145,7 @@ model.2 <- jags.model(textConnection(model_string.2), data = list.2, n.chains = 
 update(model.2, 50000)
 
 
-# Sample the posterior with 600000 iterations
+# Sample the posterior with 100000 iterations
 samp.2 <- coda.samples(model.2, variable.names = c("beta"), n.iter = 100000, thin = 60) 
 
 
@@ -212,11 +211,11 @@ list.3 = list(y = Pheno$leaf_DOY, x1 = Pheno$Feb_temp, x2 = Pheno$Feb_snow, Ntot
 model.3 <- jags.model(textConnection(model_string.3), data = list.3, n.chains = 3)
 
 
-# Update model with burn-in iterations (40000)
+# Update model with burn-in iterations (50000)
 update(model.3, 50000)
 
 
-# Sample the posterior with 500000 iterations
+# Sample the posterior with 100000 iterations
 samp.3 <- coda.samples(model.3, variable.names = c("beta"), n.iter = 100000, thin = 50) 
 
 
